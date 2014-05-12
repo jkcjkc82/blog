@@ -1,0 +1,131 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>자바스크립트 DOM</h1><h1 id="dom-">Dom 이란?</h1>
+<p>Document Object Model의 약자로 HTML을 제어 할 수 있는 API의 역할을 합니다.</p>
+
+<h1 id="dom--">DOM의 처리 순서</h1>
+<ul>
+  <li>제어 대상 탐색</li>
+  <li>제어 대상 메소드 실행 및 이벤트 핸들러 등록</li>
+</ul>
+
+<h1 id="dom-method">Dom Method</h1>
+<ul>
+  <li>createElement : HTML 요소를 생성</li>
+  <li>appendChild : 자식에 요소를 추가</li>
+  <li>getAttribute : 속성을 가져옴</li>
+  <li>setAttribute : 속성을 넣음</li>
+  <li>getElementById : ID속성으로 요소를 가져옴</li>
+  <li>getElementsByName : NAME속성으로 요소를 가져옴(배열)</li>
+  <li>getElementsByTagName : 엘리먼트명으로 요소를 가져옴(배열)</li>
+</ul>
+
+<p>이러한 Dom 메소드를 어떻게 사용하는지 알아보도록 하겠습니다. (예제 링크)[http://naver.com]</p>
+
+<h1 id="html">HTML</h1>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;h1&gt;</span>testByTagName - 색 변경 - getElementsByTagName 예제<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;test1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>4<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>5<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+  
+<span class="nt">&lt;h1&gt;</span>testByName - 색 변경, getElementsByName 예제<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;test2&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">name=</span><span class="s">&quot;li_name&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">name=</span><span class="s">&quot;li_name&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">name=</span><span class="s">&quot;li_name&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">name=</span><span class="s">&quot;li_name&quot;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">name=</span><span class="s">&quot;li_name&quot;</span><span class="nt">&gt;</span>5<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+  
+  
+<span class="nt">&lt;h1&gt;</span>drawBox - 박스 그렸다 5초만에 지우기<span class="nt">&lt;/h1&gt;</span></code></pre></div>
+
+<h1 id="javascript">Javascript</h1>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+<span class="c1">//DIV 박스를 body 태그 안에 추가해주는 함수</span>
+<span class="kd">function</span> <span class="nx">drawBox</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// DIV 요소 생성</span>
+    <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// DIV의 속성 지정 (id, style)</span>
+    <span class="nx">div</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span><span class="s2">&quot;testDiv&quot;</span><span class="p">);</span>
+    <span class="nx">div</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span><span class="s2">&quot;border:1px solid #000000;padding:10px;height:100px;&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// DIV 내용으로 위에서 지정한 속성을 출력 </span>
+    <span class="nx">div</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">div</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// DIV를 body 태그안에 추가해준다. </span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
+  
+    <span class="c1">// 5초 보여주고 지우기</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 요소 제거</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
+    <span class="p">},</span><span class="mi">5000</span><span class="p">);</span>
+<span class="p">}</span>
+  
+<span class="kd">function</span> <span class="nx">testByTagName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// test1이란 아이디를 가진 요소를 JS 변수로 선언</span>
+    <span class="kd">var</span> <span class="nx">test2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;test1&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// test2에서 tagName으로 검색해서 li인 것만 찾아서 배열로 저장</span>
+    <span class="kd">var</span> <span class="nx">arrLi</span> <span class="o">=</span> <span class="nx">test2</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// 배열 갯수</span>
+    <span class="kd">var</span> <span class="nx">cnt</span> <span class="o">=</span> <span class="nx">arrLi</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  
+    <span class="c1">// 배열 루프</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">cnt</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 선택된 li 요소의 색상 변경</span>
+        <span class="nx">arrLi</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span><span class="s2">&quot;color:red;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+  
+<span class="kd">function</span> <span class="nx">testByName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">arrLi</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">&quot;li_name&quot;</span><span class="p">);</span>
+  
+    <span class="c1">// 배열 갯수</span>
+    <span class="kd">var</span> <span class="nx">cnt</span> <span class="o">=</span> <span class="nx">arrLi</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  
+    <span class="c1">// 배열 루프</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">cnt</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 선택된 li 요소의 색상 변경</span>
+        <span class="nx">arrLi</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span><span class="s2">&quot;color:blue;font-size:14px;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+  
+<span class="c1">// 함수 실행</span>
+<span class="nx">drawBox</span><span class="p">();</span>
+<span class="nx">testByName</span><span class="p">();</span>
+<span class="nx">testByTagName</span><span class="p">();</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+
+<h1 id="jquery-">jQuery 에서는?</h1>
+
+<h2 id="manipulation---">Manipulation - 조작</h2>
+<ul>
+  <li>append : 자식요소를 가장 뒤에 추가한다.</li>
+  <li>prepend : 자식요소를 가장 앞에 추가한다.</li>
+  <li>after : 형제요소를 뒤에 추가한다.</li>
+  <li>before : 형제 요소를 앞에 추가한다.</li>
+  <li>attr : 속성을 가져오거나 지정할 수 있다.(get/set)</li>
+  <li>html : 선택된 요소 안에 HTML을 가져오거나 지정할 수 있다.(get/set)</li>
+  <li>text : 선택된 요소 안에 텍스트만 가져오거나 지정할 수 있다.(get/set)</li>
+  <li>val : 선택된 요소의 value 값을 가져오거나 지정할 수 있다.(get/set)</li>
+  <li>css: 선택된 요소의 css 값을 가져오거나 지정할 수 있다.(get/set)</li>
+  <li>remove : 선택된 요소를 삭제한다.</li>
+</ul>
+
+<h2 id="traversing---">Traversing - 탐색(?)</h2>
+<ul>
+  <li>find : 선택된 요소 아래에 있는 요소를 검색해서 선택한다.</li>
+  <li>next : 선택된 요소 다음 요소를 선택한다.</li>
+  <li>prev : 선택된 요소 이전 요소를 선택한다.</li>
+  <li>parent : 선택된 요소의 부모 요소를 선택한다.</li>
+  <li>children : 선택된 요소의 자식 요소를 선택한다.</li>
+</ul>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%EA%B3%BC%20%EB%94%94%EB%B2%84%EA%B9%85/">자바스크립트 개발환경 구축과 디버깅</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%95%84%EC%9D%B4%ED%8C%A8%EB%93%9C%EC%97%90%EC%84%9C%20%ED%95%9C%EA%B8%80%EB%A1%9C%20%ED%95%B4%EC%8B%9C%EC%97%90%20%EC%A0%80%EC%9E%A5%ED%95%A0%20%EB%95%8C%20%EB%AC%B8%EC%A0%9C%EC%A0%90/">아이패드에서 한글로 해시에 저장할 때 문제점</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>

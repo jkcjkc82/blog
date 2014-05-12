@@ -1,0 +1,42 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>자바스크립트 개발환경 구축과 디버깅</h1><h1 id="section">준비물</h1>
+<ul>
+  <li>텍스트 에디터 이클립스, 에디트 플러스, 메모장 등 자신에게 가장 편한 텍스트 에디터를 사용하면 됩니다.</li>
+  <li>파이어폭스, 파이어버그 플러그인 이 문서의 내용을 따라가기 위해서는 반드시 파이어폭스와 파이어버그 플러그인을 설치해야 합니다.</li>
+</ul>
+
+<h1 id="section-1">파이어폭스, 파이어버그 설치하기</h1>
+<ul>
+  <li>모질라 파이어폭스 사이트에서 다운로드 받습니다.
+  http://www.mozilla.or.kr/ko/firefox/</li>
+  <li>다운로드 받은 파일을 실행해서 설치합니다.</li>
+  <li>파이어폭스 프로그램을 실행합니다.</li>
+  <li>메뉴에서 [도구] - [부가기능]을 선택합니다.</li>
+  <li>[전체검색] 탭을 선택하고, Firebug 를 검색해서 설치합니다.</li>
+  <li>파이어폭스를 닫고 다시 시작합니다.</li>
+</ul>
+
+<h1 id="hello-world">Hello World!</h1>
+<ul>
+  <li>이제 텍스트 에디터를 이용해서 helloworld.html 파일을 생성하고, 아래 코드를 입력하고 저장합니다.</li>
+</ul>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>Hello World<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+<ul>
+  <li>helloworld.html 파일을 파이어폭스에서 불러옵니다.(탐색기에서 파이어폭스로 드래그) 
+<img src="http://blog.kichul.co.kr/images/upload/-2011-06-20--11-1.54.50.png" alt="스샷" /></li>
+  <li>파이어폭스 우측 하단에 벌레 아이콘을 클릭해서 파이어버그를 실행합니다. 그리고 콘솔 탭의 화살표를 눌러 Enable 상태로 바꿉니다. 
+<img src="http://blog.kichul.co.kr/images/upload/-2011-06-20--11.55.41.png" alt="스샷" /></li>
+  <li>새로고침을 하게 되면 콘솔창에 Hello World!라고 출력됩니다. 
+<img src="http://blog.kichul.co.kr/images/upload/-2011-06-20--11.56.10.png" alt="스샷" /></li>
+</ul>
+
+<p>지금까지 파이어버그의 콘솔창을 이용해서 Hello World를 출력해봤습니다. 여기서 중요한 것은 console.log를 이용한 디버깅입니다.  위의 예제는 String 값을 출력하는 것이지만 Object나 Array를 넣게 되면 안에 들어가는 내용이 무엇인지 보기 좋게 나오게 됩니다. 이러한 디버깅 방법은 Opera의 기본 디버거인 잠자리나 크롬의 개발자도구에서 별도의 플러그인 없이 지원하며, IE8 개발자도구에서도 String까지는 지원합니다. 게다가 모바일 사파리에서도 디버그 설정을 활성화 시키면 console.log를 사용해서 디버깅할 수 있습니다.    </p>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20DOM/">자바스크립트 DOM</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%95%84%EC%9D%B4%ED%8C%A8%EB%93%9C%EC%97%90%EC%84%9C%20%ED%95%9C%EA%B8%80%EB%A1%9C%20%ED%95%B4%EC%8B%9C%EC%97%90%20%EC%A0%80%EC%9E%A5%ED%95%A0%20%EB%95%8C%20%EB%AC%B8%EC%A0%9C%EC%A0%90/">아이패드에서 한글로 해시에 저장할 때 문제점</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>

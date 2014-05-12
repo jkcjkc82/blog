@@ -1,0 +1,46 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>.data() – jQuery API</h1><h1 id="section">설명</h1>
+<p>data()는 선택된 요소와 함께 연결된 데이터를 임의로 저장하거나 가져올 수 있습니다. val(), text(), html() 등과 같은 get/set 메소드입니다. jQuery 1.4.3 버전부터는 HTML5 data 속성이 jquery 데이터로부터 자동으로 만들어지게 됩니다.</p>
+
+<h1 id="section-1">예제</h1>
+
+<h2 id="html">HTML</h2>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;data&quot;</span> <span class="na">style=</span><span class="s">&quot;border:1px solid blue;margin:10px;padding:10px;&quot;</span><span class="nt">&gt;</span>나는 데이터! 나의 데이터는 겉으로 보이지 않아...<span class="nt">&lt;/div&gt;</span>
+ 
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btnViewData&quot;</span><span class="nt">&gt;</span>데이터 보기<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btnStoreData&quot;</span><span class="nt">&gt;</span>데이터 저장<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btnRemoveData&quot;</span><span class="nt">&gt;</span>데이터 제거<span class="nt">&lt;/button&gt;</span></code></pre></div>
+
+<h2 id="javascript">Javascript</h2>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://code.jquery.com/jquery-latest.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 데이터 보기</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#btnViewData&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#data&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+  
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;숨겨져 있는 데이터는 바로...\n\n&#39;&quot;</span><span class="o">+</span><span class="nx">content</span><span class="o">+</span><span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+  
+<span class="c1">//데이터 저장</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#btnStoreData&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#data&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span><span class="s2">&quot;속에 감춰진 데이터는 바로 1&quot;</span><span class="p">);</span>
+  
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;데이터가 저장되었습니다.&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+  
+<span class="c1">//데이터 제거</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#btnRemoveData&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#data&quot;</span><span class="p">).</span><span class="nx">removeData</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+  
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;데이터가 제거되었습니다.&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+
+<h1 id="url">URL</h1>
+<ul>
+  <li><a href="http://api.jquery.com/data/">.data() – jQuery API.</a></li>
+  <li>[](http://ejohn.org/blog/html-5-data-attributes)</li>
+  <li>[](http://www.w3.org/TR/html5/elements.html#embedding-custom-non-visible-data-with-the-data-attributes)</li>
+</ul>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%EA%B3%BC%20%EB%94%94%EB%B2%84%EA%B9%85/">자바스크립트 개발환경 구축과 디버깅</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20DOM/">자바스크립트 DOM</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>

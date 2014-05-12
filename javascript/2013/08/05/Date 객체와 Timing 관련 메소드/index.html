@@ -1,0 +1,110 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>Date 객체와 Timing 관련 메소드</h1><h1 id="timing">Timing</h1>
+<p>## setTimeout
+setTimeout 메소드는 지정된 시간 이후에 함수를 실행시킵니다.</p>
+
+<h2 id="cleartimeout">clearTimeout</h2>
+<p>clearTimeout 메소드는 setTimeout을 시켰을 경우 타이머가 동작하게 되는데 이 타이머를 해제하는 역할을 합니다.</p>
+
+<h2 id="setinterval">setInterval</h2>
+<p>setTimeout 메소드는 지정된 시간 이후에 단 한 번만 함수를 실행시키는 반면에 setInterval 메소드는 지정된 시간마다 함수를 실행시킵니다.</p>
+
+<h2 id="clearinterval">clearInterval</h2>
+<p>clearTimeout 메소드는 setInterval 메소드로 타이머를 동작시켰을 때 해제하는 역할을 합니다.</p>
+
+<h1 id="example">Example</h1>
+
+<p><a href="http://">예제보기</a></p>
+
+<h2 id="html">HTML</h2>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;clock&quot;</span> <span class="na">style=</span><span class="s">&quot;margin-bottom:10px;&quot;</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;stopClock&quot;</span><span class="nt">&gt;</span>시간아 멈춰라!<span class="nt">&lt;/button&gt;</span>
+  
+<span class="nt">&lt;hr</span> <span class="na">style=</span><span class="s">&quot;margin:10px 0 10px 0;&quot;</span> <span class="nt">/&gt;</span>
+  
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;fivesec&quot;</span> <span class="na">style=</span><span class="s">&quot;display:none;border:1px solid #000;&quot;</span><span class="nt">&gt;</span>5초 후 보여주는 레이어<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;dontdisplay&quot;</span><span class="nt">&gt;</span>안봐!<span class="nt">&lt;/button&gt;</span></code></pre></div>
+
+<h2 id="javascript">Javascript</h2>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://code.jquery.com/jquery-latest.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 5초 후에 5초 레이어 보여주기</span>
+<span class="kd">var</span> <span class="nx">timer1</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 팝업 보여주기</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#fivesec&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+<span class="p">},</span><span class="mi">5000</span><span class="p">);</span>
+  
+<span class="c1">// 5초 팝업 타이머 해제하는 액션</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#dontdisplay&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timer1</span><span class="p">);</span>
+    <span class="nx">timer1</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">});</span>
+  
+<span class="c1">// ---------------------------</span>
+  
+<span class="c1">// 시계</span>
+<span class="kd">var</span> <span class="nx">timer2</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 현재시간 불러와서 변수에 저장</span>
+    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+  
+    <span class="c1">// 현재시간 출력</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#clock&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+<span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
+  
+<span class="c1">// 시간 멈추는 액션</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#stopClock&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 타이머 해제</span>
+    <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">timer2</span><span class="p">);</span>
+    <span class="nx">timer2</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+
+<h1 id="date-">Date 객체</h1>
+<p>자바스크립트에서는 날짜에 관한 기본적인 것들은 Date 객체가 담당하게 됩니다. 예를들면 현재시간을 가져온다거나, 1월1일이 무슨 요일인지 등을 할 수 있는 객체입니다.</p>
+
+<h2 id="url">참조 URL</h2>
+<p>아래 링크에서 Date 객체의 모든 것을 확인 할 수 있습니다.</p>
+
+<p><a href="http://w3schools.com/jsref/jsref_obj_date.asp">http://w3schools.com/jsref/jsref_obj_date.asp</a></p>
+
+<h2 id="example-1">Example</h2>
+
+<ul>
+  <li><a href="http://">예제보기</a></li>
+</ul>
+
+<h3 id="javascript-1">Javascript</h3>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// ---- 함수 정의부</span>
+  
+<span class="c1">// 타이머 변수 생성 - 전역</span>
+<span class="kd">var</span> <span class="nx">timer_start</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">timer_end</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  
+<span class="c1">// 시작시간 구하기 함수</span>
+<span class="kd">function</span> <span class="nx">startTimer</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">timer_start</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="p">}</span>
+  
+<span class="c1">// 정지시간 구하기 함수</span>
+<span class="kd">function</span> <span class="nx">stopTimer</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">timer_end</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="p">}</span>
+  
+<span class="c1">// 시간 계산하기</span>
+<span class="kd">function</span> <span class="nx">getTimer</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">timer_end</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span><span class="o">-</span><span class="nx">timer_start</span><span class="p">.</span><span class="nx">getTime</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="o">+</span><span class="s2">&quot;ms&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+  
+<span class="c1">// ---- 구현부</span>
+<span class="nx">startTimer</span><span class="p">();</span> <span class="c1">// 시작시간 구하기 함수 실행</span>
+<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">100000000</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">stopTimer</span><span class="p">();</span> <span class="c1">// 정지시간 구하기 함수 실행</span>
+<span class="nx">getTimer</span><span class="p">();</span> <span class="c1">// 시간 계산해서 콘솔로 출력</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%EA%B3%BC%20%EB%94%94%EB%B2%84%EA%B9%85/">자바스크립트 개발환경 구축과 디버깅</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20DOM/">자바스크립트 DOM</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>

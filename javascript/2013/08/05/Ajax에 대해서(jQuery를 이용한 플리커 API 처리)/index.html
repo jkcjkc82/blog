@@ -1,0 +1,126 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>Ajax에 대해서(jQuery를 이용한 플리커 API 처리)</h1><h1 id="ajax">AJAX란?</h1>
+<p>대화식 웹 애플리케이션의 제작을 위해 아래와 같은 조합을 이용하는 웹 개발 기법입니다. Asynchronous Javascript and XML - 비동기적인 자바스크립트와 XML</p>
+
+<ul>
+  <li>표현정보를 위한 HTML과 CSS</li>
+  <li>동적인 화면 출력 및 표시 정보와의 상호작용을 위한 DOM, 자바스크립트</li>
+  <li>웹서버와 비동기적으로 데이터 교환하고 조작하기 위한 XML, XSLT, XMLHttpRequest</li>
+</ul>
+
+<h1 id="ajax--">AJAX의 장점과 단점</h1>
+<p>## 장점
+- 페이지 이동이 없이 빠른속도로 화면전환할 수 있다.
+- 서버처리를 기다리지 않고 비동기 요청이 가능하다.
+- 수신하는 데이터 양을 줄일 수 있고, 클라이언트에게 처리를 위임할 수 있다.</p>
+
+<h2 id="section">단점</h2>
+<ul>
+  <li>Ajax를 쓸 수 없는 브라우저에 대한 문제가 있다.</li>
+  <li>지원하는 캐릭터셋이 한정되어 있다.</li>
+  <li>디버깅이 용이하지 안다.</li>
+</ul>
+
+<h1 id="section-1">웹 브라우저</h1>
+<p>## Ajax 지원
+- MS IE5 이상
+- 오페라 8.0 이상
+- 오페라 모바일 8.0 이상
+- 구글크롬</p>
+
+<h2 id="ajax-">Ajax 미지원</h2>
+<ul>
+  <li>오페라 7이하</li>
+  <li>MS IE 4.0 이하</li>
+  <li>텍스트 기반 브라우저 lynx, w3m</li>
+  <li>시각장애인을 위한 브라우저</li>
+  <li>1997년 이전 브라우저</li>
+</ul>
+
+<h1 id="section-2">활용사례</h1>
+<ul>
+  <li>검색어 자동완성</li>
+  <li>회원가입폼에서의 아이디 중복 체크</li>
+  <li>페이스북이나 구글의 알림 서비스(숫자)</li>
+</ul>
+
+<h1 id="section-3">크로스 도메인 문제</h1>
+<p>기본적으로 Ajax 요청은 도메인이 같은 호스트로만 요청이 가능하고, 도메인이 다른 호스트에 요청을 하게 되면 콘텐츠를 받아올 수 없습니다. 예를들어 aaa.com 이라는 호스트에서 http://bbb.com/rss.xml 을 ajax 요청해서 받아 올 수는 없습니다. 이를 해결할 수 있는 4가지 방법이 있습니다.</p>
+
+<ul>
+  <li>프록시 방식</li>
+  <li>호출되어지는 호스트에서 허용하는 헤더를 넣는 방식</li>
+  <li>script 태그를 동적으로 생성하는 방식</li>
+</ul>
+
+<h1 id="api--">플리커 API 활용 예제</h1>
+
+<p><a href="http://">예제소스보기</a></p>
+
+<h2 id="html">HTML</h2>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;result&quot;</span> <span class="na">style=</span><span class="s">&quot;width:800px;height:60px;overflow-y:auto;border:1px solid #000000;padding:10px;margin:0 auto;margin-bottom:10px;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;display:none;width:800px;height:20px;margin:0 auto;&quot;</span> <span class="na">id=</span><span class="s">&quot;loading&quot;</span><span class="nt">&gt;</span>Loading.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;list&quot;</span><span class="nt">&gt;&lt;/ul&gt;</span></code></pre></div>
+
+<h2 id="javascript">Javascript</h2>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://code.jquery.com/jquery-1.5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 타이머</span>
+<span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  
+<span class="c1">// 로딩 시작 처리</span>
+<span class="kd">function</span> <span class="nx">startLoading</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#loading&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+  
+    <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#loading&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">);</span>
+    <span class="p">},</span><span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span> 
+  
+<span class="c1">// 로딩 끝 처리</span>
+<span class="kd">function</span> <span class="nx">stopLoading</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#loading&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+  
+    <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
+    <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+  
+<span class="c1">// 로딩 시작하기</span>
+<span class="nx">startLoading</span><span class="p">();</span>
+  
+<span class="c1">// Ajax 불러오기</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&amp;api_key=d7cf8651384b2e99038ecf497b440421&amp;format=json&amp;nojsoncallback=1&amp;auth_token=72157627258910199-5bc337cbd1122195&amp;api_sig=9de8ad17087c2026f670fb26478c48bb&quot;</span><span class="p">,</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;get&quot;</span><span class="p">,</span>
+    <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="c1">// 리턴받을 데이터의 타입 - text, xml 등...</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// 파라미터     </span>
+    <span class="p">},</span>
+    <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 성공했을 때의 처리 콜백함수</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#result&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;success&lt;br /&gt;&quot;</span><span class="p">);</span>
+  
+        <span class="nx">$</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">photos</span><span class="p">.</span><span class="nx">photo</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="c1">// 박스 만들기</span>
+            <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="s2">&quot;&lt;div style=&#39;float:left;margin:0 10px 10px 0;&#39;&gt;&lt;img src=&#39;http://farm&quot;</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">farm</span><span class="o">+</span><span class="s2">&quot;.static.flickr.com/&quot;</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">server</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">secret</span><span class="o">+</span><span class="s2">&quot;_s.jpg&#39; /&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#list&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+  
+            <span class="c1">// 박스에 클릭이벤트 정의</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#list&quot;</span><span class="p">).</span><span class="nx">children</span><span class="p">(</span><span class="s2">&quot;:last-child&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="c1">// 페이드 아웃 효과 후 삭제</span>
+                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">fadeOut</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">});</span>     
+    <span class="p">},</span>
+    <span class="nx">complete</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// ajax 전송이 완료 됐을 때의 콜백함수</span>
+        <span class="nx">stopLoading</span><span class="p">();</span>
+  
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#result&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;complete&lt;br /&gt;&quot;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 에러가 발생했을 때의 콜백함수</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#result&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;error&lt;br /&gt;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%EA%B3%BC%20%EB%94%94%EB%B2%84%EA%B9%85/">자바스크립트 개발환경 구축과 디버깅</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20DOM/">자바스크립트 DOM</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>

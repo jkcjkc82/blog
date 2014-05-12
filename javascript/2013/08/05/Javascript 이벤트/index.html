@@ -1,0 +1,155 @@
+<html><head><title>Kichul's blog</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="chrome=1"/><meta name="description" content="Blog : Kichul&amp;#39;s blog"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><link rel="stylesheet" type="text/css" media="screen" href="/assets/css/stylesheet.css"/></head><body></body><div id="header_wrap" class="outer"><header class="inner"><h1 id="project_title"><a href="/">Kichul&#39;s Blog</a></h1><h2 id="project_tagline">Fablous life!</h2><section id="menu"><ul class="nav nav-pills nav-justified"><li><a href="/">Home</a></li><li><a href="/pages/about/">About</a></li><li><a href="/blog/">Blog</a></li></ul></section></header></div><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><h1>Javascript 이벤트</h1><h1 id="section">이벤트란?</h1>
+
+<p>웹페이지에서 사용자가 클릭을 하거나 키보드 입력과 같은 상호작용을 하게 되는데, 클릭이나 키 입력과 같이 발생하는 것을 이벤트라고 합니다. 
+창 사이즈를 조절하거나 스크롤을 내리거나 올릴 때에도 이벤트는 발생합니다. 
+이벤트가 발생했을 때 실행되는 메소드를 이벤트 핸들러라고 합니다.</p>
+
+<h1 id="ie--">IE에서 이벤트 추가하기</h1>
+
+<p><code>
+element.attachEvent(event, callback);
+</code></p>
+
+<h1 id="section-1">표준 브라우저에서 이벤트 추가하기</h1>
+
+<p><code>
+element.addEventListener(event, callback, useCapture);
+</code></p>
+
+<h1 id="section-2">이벤트 추가하는 함수</h1>
+<p>IE와 표준브라우저에서 사용할 수 있는 함수를 만들어 보겠습니다.	</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addEvent</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span><span class="nx">evt</span><span class="p">,</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">useCapture</span><span class="p">)</span> <span class="p">{</span>   
+    <span class="k">if</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ele</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">useCapture</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ele</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h1 id="ie-----">IE와 표준 브라우저의 이벤트에 대한 차이점</h1>
+
+<p>이벤트를 등록, 해제하는 메소드가 다르다. 
+IE : attachEvent, detachEvent 
+표준 브라우저 : addEventListener, removeEventListener</p>
+
+<p>이벤트 지정 문자열이 다르다. IE의 경우는 앞에 on이 붙음.</p>
+
+<p>이벤트 객체를 받는 방법이 다르다. 
+IE : window.event 객체로 전달 받음. 
+표준 브라우저 : callback 함수에서 인자로 전달 받음.</p>
+
+<p>기본 이벤트의 실행 방지 방법이 다르다. 
+IE : return 값에 의해서 결정된다. 
+표준 브라우저 : preventDefault 메소드를 사용해서 결정한다.</p>
+
+<h1 id="section-3">자주 사용하는 이벤트 리스트</h1>
+<p>click : 마우스 클릭 
+mouseover : 마우스 오버 
+mouseout : 마우스 아웃 
+change : 셀렉트박스의 값이 달라졌을 때 
+scroll : 스크롤 되었을 때 
+resize : 사이즈가 변경 되었을 때 
+keyup : 키가 눌린 후 뗄 때 
+focus : 포커스 
+blur : 포커스 해제 되었을 때</p>
+
+<h1 id="section-4">캡쳐와 버블링</h1>
+
+<p>이벤트는 최상위 엘리먼트로부터 이벤트가 발생한 엘리먼트까지 찾아 들어간 후 다시 최상위 요소까지 올라가며 이벤트를 발생 시킵니다 
+여기서 이벤트가 발생한 엘리먼트까지 들어가는 과정을 이벤트 캡쳐라 하고, 최상위 요소까지 다시 올라가는 과정을 이벤트 버블링이라고 합니다.</p>
+
+<h1 id="section-5">예제</h1>
+
+<p>지금까지 얘기한 이벤트를 실제 사용한 예제를 만들어보도록 하겠습니다.</p>
+
+<h1 id="html">HTML</h1>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;h1&gt;</span>Event Test<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;wrap&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;wrap2&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;test_btn&quot;</span><span class="nt">&gt;</span>click<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+  
+<span class="nt">&lt;h1&gt;</span>DEBUG <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;clear&quot;</span><span class="nt">&gt;</span>clear<span class="nt">&lt;/button&gt;&lt;/h1&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;console&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></code></pre></div>
+
+<h2 id="css">CSS</h2>
+
+<div class="highlight"><pre><code class="css"><span class="nf">#wrap</span> <span class="p">{</span><span class="k">border</span><span class="o">:</span><span class="m">1px</span> <span class="k">solid</span> <span class="m">#000000</span><span class="p">;</span><span class="k">padding</span><span class="o">:</span><span class="m">10px</span><span class="p">;</span><span class="k">margin-bottom</span><span class="o">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nf">#wrap2</span> <span class="p">{</span><span class="k">border</span><span class="o">:</span><span class="m">1px</span> <span class="k">solid</span> <span class="m">#E2E2E2</span><span class="p">;</span><span class="k">padding</span><span class="o">:</span><span class="m">10px</span><span class="p">;</span><span class="k">margin-bottom</span><span class="o">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nf">#console</span> <span class="p">{</span><span class="k">height</span><span class="o">:</span><span class="m">400px</span><span class="p">;</span><span class="k">overflow-y</span><span class="o">:</span><span class="k">scroll</span><span class="p">;</span><span class="k">border</span><span class="o">:</span><span class="m">1px</span> <span class="k">solid</span> <span class="m">#E2E2E2</span><span class="p">;</span><span class="k">padding</span><span class="o">:</span><span class="m">10px</span><span class="p">;}</span></code></pre></div>
+
+<h2 id="javascript">Javascript</h2>
+
+<div class="highlight"><pre><code class="html"><span class="c">&lt;!-- 스크립트 영역 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://code.jquery.com/jquery-1.6.1.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+<span class="c1">// HTML 엘리먼트를 자바스크립트 변수로 저장</span>
+<span class="kd">var</span> <span class="nx">wrap</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;wrap&quot;</span><span class="p">);</span> <span class="c1">// 감싸는 레이어</span>
+<span class="kd">var</span> <span class="nx">wrap2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;wrap2&quot;</span><span class="p">);</span> <span class="c1">// 감싸는 레이어2</span>
+<span class="kd">var</span> <span class="nx">clear_btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;clear&quot;</span><span class="p">);</span> <span class="c1">// 클리어 버튼</span>
+<span class="kd">var</span> <span class="nx">test_btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;test_btn&quot;</span><span class="p">);</span> <span class="c1">// 클릭 버튼</span>
+<span class="kd">var</span> <span class="nx">consol_div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;console&quot;</span><span class="p">);</span> <span class="c1">// 콘솔창</span>
+  
+<span class="c1">// 카운트 변수 정의</span>
+<span class="kd">var</span> <span class="nx">logCnt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  
+<span class="c1">// 로그를 출력하기 위한 함수</span>
+<span class="kd">function</span> <span class="nx">logConsole</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">consol_div</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">logCnt</span><span class="o">+</span><span class="s2">&quot; : &quot;</span><span class="o">+</span><span class="nx">msg</span><span class="o">+</span><span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="o">+</span><span class="nx">consol_div</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">;</span>
+    <span class="nx">logCnt</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+  
+<span class="c1">// 로그 초기화 함수</span>
+<span class="kd">function</span> <span class="nx">clearConsole</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">consol_div</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+    <span class="nx">logCnt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+  
+<span class="c1">// 이벤트 등록을 위한 브라우저 호환을 위한 함수 정의</span>
+<span class="kd">function</span> <span class="nx">addEvent</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span><span class="nx">evt</span><span class="p">,</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">useCapture</span><span class="p">)</span> <span class="p">{</span>   
+    <span class="k">if</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ele</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">useCapture</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ele</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+  
+<span class="cm">/*** 구현 ***/</span>
+  
+<span class="c1">// 로그 clear 버튼 클릭 이벤트 걸기</span>
+<span class="nx">addEvent</span><span class="p">(</span><span class="nx">clear_btn</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">clearConsole</span><span class="p">();</span>
+<span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+  
+<span class="c1">// 감싸는 레이어 클릭 이벤트 걸기</span>
+<span class="nx">addEvent</span><span class="p">(</span><span class="nx">wrap</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">logConsole</span><span class="p">(</span><span class="s2">&quot;wrap click&quot;</span><span class="p">);</span>
+<span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+  
+<span class="c1">//감싸는 레이어2 클릭 이벤트 걸기</span>
+<span class="nx">addEvent</span><span class="p">(</span><span class="nx">wrap2</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">logConsole</span><span class="p">(</span><span class="s2">&quot;wrap2 click&quot;</span><span class="p">);</span>
+<span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+  
+<span class="c1">// 버튼 클릭 이벤트 걸기</span>
+<span class="nx">addEvent</span><span class="p">(</span><span class="nx">test_btn</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 표준 브라우저일 경우</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span> <span class="p">{</span>
+         <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>       
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// IE 일 경우           </span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">cancelBubble</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>       
+    <span class="p">}</span> 
+  
+    <span class="nx">logConsole</span><span class="p">(</span><span class="s2">&quot;button click&quot;</span><span class="p">);</span>
+<span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+<h1 id="section-6">숙제</h1>
+<ol>
+  <li>현재 logConsole로 출력하는 부분을 각 엘리먼트(wrap, wrap2, test_btn)의 배경색(background-color)을 바뀌도록 수정하시오.</li>
+  <li>감싸는 레이어2(wrap2)에서 버블링이 일어나지 않도록 수정하시오.</li>
+</ol>
+<div class="related"><h3>Related Posts</h3><table class="post-list"><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C%20OOP%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">자바스크립트로 OOP 구현하기</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EA%B5%AC%EC%B6%95%EA%B3%BC%20%EB%94%94%EB%B2%84%EA%B9%85/">자바스크립트 개발환경 구축과 디버깅</a></td><td>05 Aug 2013</td></tr><tr><td><a href="/javascript/2013/08/05/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20DOM/">자바스크립트 DOM</a></td><td>05 Aug 2013</td></tr>					</table></div></section></div><div id="footer_wrap" class="outer"><footer class="inner"><p class="copyright">Blog maintained by <a href="mailto:jung@kichul.co.kr">jung@kichul.co.kr</a></p></footer></div></html>
